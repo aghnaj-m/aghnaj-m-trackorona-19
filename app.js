@@ -23,8 +23,8 @@ connection.connect(function(error){
     if(!!error) console.log(error);
     else console.log('Database Connected!');
 });*/
+app.use(express.static(path.join(__dirname, 'assets')));
 
-app.use(express.static('assets'));
 
 
 //definir moteur de template
@@ -192,6 +192,7 @@ app.get('/delete/:Id',(req, res) => {
 
 
 // Server Listening
-app.listen(3000, () => {
-    console.log('Server is running at port 3000');
-});
+app.listen(process.env.PORT || 3000, function(){
+    console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
+  });
+  
