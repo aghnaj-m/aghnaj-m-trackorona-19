@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="apple-touch-icon" sizes="76x76" href="http://localhost:3000/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="http://localhost:3000/img/favicon.png">
+  <title>
+    Covid19 Statistics
+  </title>
+  <!--     Fonts and icons     -->
+  <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet" />
+  <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+  <!-- Nucleo Icons -->
+  <link href="http://localhost:3000/css/nucleo-icons.css" rel="stylesheet" />
+  <!-- CSS Files -->
+  <link href="http://localhost:3000/css/black-dashboard.css?v=1.0.0" rel="stylesheet" />
+  <!-- CSS Just for demo purpose, don't include it in your project -->
+  <link href="http://localhost:3000/demo/demo.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
+
+  <style>
+    ul {
+      list-style:none;
+      margin: 0px;
+      padding: 2px;
+    }
+    ul > li:first-child {
+      font-size: x-small;
+    }
+    ul > li:nth-child(2) {
+      font-size: medium;
+      font-weight: bold;
+      color: white;
+    }
+
+
+  </style>
+</head>
+
+<body class="">
+  <div class="wrapper">
+    <div class="sidebar">
+      <!--
+        Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red"
+    -->
+      <div class="sidebar-wrapper">
+        <div class="logo">
+          <a href="javascript:void(0)" class="simple-text logo-mini">
+            C-19
+          </a>
+          <a href="javascript:void(0)" class="simple-text logo-normal">
+            Statistics
+          </a>
+        </div>
+        <ul class="nav">
+          <li class="active ">
+            <a href="/index">
+              <i class="tim-icons icon-world"></i>
+              <p>Worldwide Vision</p>
+            </a>
+          </li>
+          <li class="active ">
+            <a href="/index/regional">
+              <i class="tim-icons icon-chart-pie-36"></i>
+              <p>Regional vision</p>
+            </a>
+          </li>
+          <li class="active ">
+            <a href="/index/viewAll">
+              <i class="tim-icons icon-bullet-list-67"></i>
+              <p>Table view</p>
+            </a>
+          </li>
+          <li class="active ">
+            <a href="/index/morocco/details">
+              <i class="tim-icons icon-paper"></i>
+              <p>Moroccan Details</p>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="main-panel">
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-absolute navbar-transparent">
+        <div class="container-fluid">
+          <div class="navbar-wrapper">
+            <div class="navbar-toggle d-inline">
+              <button type="button" class="navbar-toggler">
+                <span class="navbar-toggler-bar bar1"></span>
+                <span class="navbar-toggler-bar bar2"></span>
+                <span class="navbar-toggler-bar bar3"></span>
+              </button>
+            </div>
+            <a class="navbar-brand" href="javascript:void(0)">Dashboard</a>
+          </div>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navigation">
+            <ul class="navbar-nav ml-auto">
+              <li>
+                <img src="http://localhost:3000/img/medical-mask.png" alt="" class="img-thumbnail" width="50" height="50">
+              </li>
+              <li><a class="" href="javascript:void(0)"><h4>Covid-19 <br>Statistics</h3></a>
+              </li>
+              <li class="separator d-lg-none"></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <div class="modal modal-search fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="SEARCH">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <i class="tim-icons icon-simple-remove"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End Navbar -->
+      <div class="content">
+        <div class="row">

@@ -1,0 +1,47 @@
+<%- include('header'); -%>
+ 
+<div class="col-xl-3 col-md-6 mb-4">
+  <ul class="list-group">
+ 
+   <% var index = 0;
+   latest.forEach(function(e){ 
+     if(e.provincestate == "") {
+       index++; 
+       %>  
+ <a
+ style="cursor: pointer"
+  class="list-group-item py-2 bg-dark clearfix">
+ <div class="pull-left">
+   <h4 class="list-group-item-heading">
+     <img height="40px" class="img-responsive" src="https://www.countryflags.io/<% if(e.countrycode){%><%= e.countrycode.iso2 %><%} %>/flat/64.png" alt="">
+     <span class="text-uppercase"><%= e.countryregion %></span>
+   </h4>
+   <p class="list-group-item-text">
+     <ul style="  display:flex;">
+       <ul >
+         <li class="font-weight-light text-info">Cases</li>
+         <li><%= e.confirmed %></li>
+       </ul>
+       <ul>
+         <li class="font-weight-light text-danger">Deaths</li>
+         <li><%= e.deaths %></li>
+       </ul>
+       <ul>
+         <li class="font-weight-light text-success">Recovered</li>
+         <li><%= e.recovered %></li>
+       </ul>
+     </ul>
+   </p>
+ </div>
+ </a>
+ <% } if(index >= 45 ){  
+   index = 0;%>
+ </ul>
+ </div>
+ <div class="col-xl-3 col-md-6 mb-4">
+   <ul class="list-group"> 
+ <% } }); %>
+ </ul>
+ </div>
+ 
+        <%- include('footer'); -%>
