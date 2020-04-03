@@ -23,7 +23,7 @@ connection.connect(function(error){
     if(!!error) console.log(error);
     else console.log('Database Connected!');
 });*/
-app.use(express.static(path.join(__dirname, 'assets')));
+//app.use(express.static(path.join(__dirname, 'assets')));
 
 
 
