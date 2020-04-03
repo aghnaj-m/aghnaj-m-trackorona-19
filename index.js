@@ -58,7 +58,7 @@ app.post('/covid19/timeseries',(req, res) => {
 
 app.get('/index',function(req, res) {
     var result = {};
-    request.get('https://wuhan-coronavirus-api.laeyoung.endpoint.ainize.ai/jhu-edu/brief', function(err, response, body) {
+    request.get('https://covid19.mathdro.id/api', function(err, response, body) {
         if (!err && response.statusCode == 200) {
             let data = JSON.parse(body);
             result.brief = data;

@@ -9,8 +9,8 @@ toolbox:{color:["#408829","#408829","#408829","#408829"]}
         axisPointer:{type:"line",lineStyle:{color:"#408829",type:"dashed"},crossStyle:{color:"#408829"},shadowStyle:{color:"rgba(200,200,200,0.3)"}}}
 ,dataZoom:{dataBackgroundColor:"#eee",fillerColor:"rgba(64,136,41,0.2)",handleColor:"#408829"},
 grid:{borderWidth:0}
-,categoryAxis:{axisLine:{lineStyle:{color:"#408829"}},splitLine:{lineStyle:{color:["#eee"]}}}
-,valueAxis:{axisLine:{lineStyle:{color:"#408829"}},splitArea:{show:!0,areaStyle:{color:["rgba(250,250,250,0.1)","rgba(200,200,200,0.1)"]}},splitLine:{lineStyle:{color:["#eee"]}}}
+,categoryAxis:{axisLine:{lineStyle:{color:"#FFFFFF"}},splitLine:{lineStyle:{color:["#eee"]}}}
+,valueAxis:{axisLine:{lineStyle:{color:"#FFFFFF"}},splitArea:{show:!0,areaStyle:{color:["rgba(250,250,250,0.1)","rgba(200,200,200,0.1)"]}},splitLine:{lineStyle:{color:["#eee"]}}}
 ,timeline:{lineStyle:{color:"#408829"},
     controlStyle:{normal:{color:"#408829"},emphasis:{color:"#408829"}}},
 k:{itemStyle:{normal:{color:"#68a54a",color0:"#a9cba2",lineStyle:{width:1,color:"#408829",color0:"#86b379"}}}}
@@ -416,5 +416,45 @@ error: function(error) {
 }
 });
 /************* /USA CHART  ************/
+/************* DAILY INFO  ************/
+if($("#echart_bar_horizontal").length)
+{
+  $.ajax({
+    url: 'https://corona-virus-stats.herokuapp.com/api/v1/cases/countries-search?limit=16',
+    mimeType: 'json',
+    type: "GET",
+  success: function(response) {
+    $('#lastupdate').html("Last update: "+response.data.last_update);
+    var data = response.data.rows;
+    var dailyCases = [];
+    var countries = [];  
+    for(var i=1; i<data.length;i++){
+      countries.push(data[i].country);
+      dailyCases.push(Number(data[i].new_cases.replace(',','')));
+    }
+    echarts.init(document.getElementById("echart_bar_horizontal"),e).setOption(
+      {
+      title:{text:"DAILY CONFIRMED CASES",x:"center",y:"top",textStyle:{fontWeight:"normal",color:"#FFFFFF"}},
+      tooltip:{trigger:"axis"},
+      toolbox:{show:!0,feature:{saveAsImage:{show:!0,title:"Save Image"}}},
+      calculable:!0,
+      xAxis:[{type:"value",boundaryGap:[0,.01]}],
+      yAxis:[{
+          type:"category",
+          data: countries.reverse()
+        }],
+      series:[
+        {name:"new case",type:"bar",data: dailyCases.reverse() }]  });
+    
+
+  },
+  error: function(error){
+
+  }
+});
+
+  
+  
+  }
 
 });
