@@ -1,9 +1,15 @@
 $(document).ready(function () {
 
     if($("#chartBig1")){
+      let date_ob = new Date();
+      let date = ("0" + date_ob.getDate()).slice(-2);
+      let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
+      let year = date_ob.getFullYear();
+      let fullDate = year + "-" + month + "-" + date;
+  
         var selectValue = $("#cAr").val();
         $.ajax({
-            url: 'https://covidapi.info/api/v1/country/'+selectValue+'/timeseries/2020-02-01/2020-03-31',
+            url: 'https://covidapi.info/api/v1/country/'+selectValue+'/timeseries/2020-02-01/'+fullDate,
             mimeType: 'json',
             data: {},
             type: "GET",

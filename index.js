@@ -36,23 +36,19 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-//ajouter le chemin d'accueil et définir la page d'index des etudiants
-/*app.get('/',(req, res) => {
-    //let sql = "SELECT etudiant.id as id,etudiant.nom as nom,filiere.nom as filiere FROM etudiant,filiere "+ 
-    //"where etudiant.filiere = filiere.id";
-    let sql = "select * from etudiant";
-    connection.query(sql, (err, rows) => {
-        if(err) throw err;
-        res.render('index', {
-            title : 'gestion etudiants',
-            etudiant : rows
-        });
-    });
-});*/
+
+
 
 
 app.post('/covid19/timeseries',(req, res) => {
-    request.get('https://covidapi.info/api/v1/country/'+req.body.country+'/timeseries/2020-02-01/2020-03-31', function(err, response, body) {
+
+    let date_ob = new Date();
+    let date = ("0" + date_ob.getDate()).slice(-2);
+    let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
+    let year = date_ob.getFullYear();
+    let fullDate = year + "-" + month + "-" + date;
+
+    request.get('https://covidapi.info/api/v1/country/'+req.body.country+'/timeseries/2020-02-01/'+fullDate, function(err, response, body) {
         if (!err && response.statusCode == 200) {
             res.send(JSON.parse(body));
         }
@@ -135,61 +131,20 @@ app.get('/index/morocco/details',(req, res) => {
     });
 });
 
+
+
+
 app.get('*', function(req, res){
     res.redirect('/index');
   });
-  
+
+
 
 /*
-app.get('/add',(req, res) => {
-    res.render('add', {
-        title : 'gestion etudiants'
-    });
-});
-
-app.post('/save',(req, res) => { 
-    let data = [req.body.id,req.body.nom];
-    let sql = "INSERT INTO etudiant values(?,?)";
-    connection.query(sql, data,(err, results) => {
-      if(err) throw err;
-      res.redirect('/');
-    });
-});
-
-app.get('/edit/:Id',(req, res) => {
-    const Id = req.params.Id;
-    let sql = `Select * from etudiant where id = ${Id}`;
-    connection.query(sql,(err, result) => {
-        if(err) throw err;
-        res.render('edit', {
-            title : 'gestion etudiants',
-            e : result[0]
-        });
-    });
-});
-
-
-app.post('/update',(req, res) => {
-    const Id = req.body.id;
-    let sql = "update etudiant SET id='"+req.body.id+"',  nom='"+req.body.nom+"' where id ="+Id;
-    let query = connection.query(sql,(err, results) => {
-      if(err) throw err;
-      res.redirect('/');
-    });
-});
-
-
-app.get('/delete/:Id',(req, res) => {
-    const Id = req.params.Id;
-    let sql = `DELETE from etudiant where id = ${Id}`;
-    let query = connection.query(sql,(err, result) => {
-        if(err) throw err;
-        res.redirect('/');  
-    });
-});
+app.get('*', function(req, res){
+    res.sendFile(path.join(__dirname+'/views/maintenance.html'));
+  });
 */
-
-
 
 // Server Listening
 app.listen(process.env.PORT || 3000, function(){
