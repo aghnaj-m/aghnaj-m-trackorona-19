@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
+alert("custom called");
   /*-------------------- WORLD MAP-----------------------*/
-
     var e={color:["#26B99A","#34495E","#BDC3C7","#3498DB","#9B59B6","#8abb6f","#759c6a","#bfd3b7"],
 title:{itemGap:8,textStyle:{fontWeight:"normal",color:"#408829"}}
 ,dataRange:{color:["#1f610a","#97b58d"]},
@@ -417,6 +417,5 @@ error: function(error) {
 }
 });
 /************* /USA CHART  ************/
-
 
 });
