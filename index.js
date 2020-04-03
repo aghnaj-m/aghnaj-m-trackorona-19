@@ -113,13 +113,13 @@ app.get('/index/regional',(req, res) => {
 });
 
 
-app.post('/covid19/regional',(req, res) => {
+/*app.post('/covid19/regional',(req, res) => {
     request.get('https://covidapi.info/api/v1/country/'+req.body.country+'/timeseries/2020-02-01/2020-03-31', function(err, response, body) {
         if (!err && response.statusCode == 200) {
             res.send(JSON.parse(body));
         }
     });
-});
+});*/
 
 app.get('/index/morocco/details',(req, res) => {
     request.get('https://covidma.herokuapp.com/api?fbclid=IwAR0xnMi3BhuAvBfzDzyCXoLK9yuMetjX8tGb51zhQXCtbjnpSwMaIPjsALc', function(err, response, body) {

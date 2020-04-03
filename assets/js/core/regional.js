@@ -25,15 +25,20 @@ $(document).ready(function () {
 
     $('#cAr').on('change',function(evt){
         var selectValue = this.value;
+        let date_ob = new Date();
+        let date = ("0" + date_ob.getDate()).slice(-2);
+        let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
+        let year = date_ob.getFullYear();
+        let fullDate = year + "-" + month + "-" + date;
         $("#1").removeClass("active");
         $("#2").removeClass("active");
         $("#0").addClass("active");
         if($("#chartBig1")){
             $.ajax({
-                url: '/covid19/regional',
-                mimeType: 'json',
+              url: 'https://covidapi.info/api/v1/country/'+selectValue+'/timeseries/2020-02-01/'+fullDate,
+              mimeType: 'json',
                 data: {country: selectValue},
-                type: "POST",
+                type: "GET",
             success: function(data) {
                 remplir(data);
             },
