@@ -1,8 +1,42 @@
-<%- include('header'); %>
+<%- include('header'); %>  
+<!-----------PART1---------------->
+       <div class="col-12 row">
+
+        <div class="col-xl-4 col-md-4 mb-4">
+          <div class="alert alert-warning alert-with-icon" data-notify="container">
+            <span data-notify="icon" class="tim-icons icon-single-02"></span>
+            <h4 class="alert-heading">TOTAL CASES</h4>
+            <br>
+            <span data-notify="message" class="display-2"><%= 
+              data[0].confirmed %></span>
+          </div>
+        </div>  
+        <div class="col-xl-4 col-md-6 mb-4">
+          <div class="alert alert-danger alert-with-icon" data-notify="container">
+            <span data-notify="icon" class="tim-icons icon-simple-remove"></span>
+            <h4 class="alert-heading">TOTAL DEATHS</h4>
+            <br>
+            <span data-notify="message" class="display-2">
+              <%= data[0].deaths %></span>
+
+          </div>
+        </div>  
+
+      <div class="col-xl-4 col-md-6 mb-4">
+        <div class="alert alert-success alert-with-icon" data-notify="container">
+          <span data-notify="icon" class="tim-icons icon-minimal-down"></span>
+          <h4 class="alert-heading">TOTAL RECOVERED</h4>
+          <br>
+          <span data-notify="message" class="display-2"><%= data[0].recovered %></span>
+        </div>
+     </div>  
+    
+    </div>
+<!-----------/PART1---------------->        
+
 <div class="col-md-12">
     <div class="card  card-plain">
       <div class="card-header">
-        <img height="50px" width ="100%" class="img-responsive" src="https://www.countryflags.io/ma/flat/64.png" alt="">
         <h3 class="card-title">confirmed cases by moroccan regions:</h3>
         <p class="category"> last update: <%= data[0].last_updated %></p>
       </div>
@@ -38,39 +72,5 @@
       </div>
     </div>
   </div>
-       <!-----------PART1---------------->
-       <div class="col-12 row">
-
-        <div class="col-xl-4 col-md-4 mb-4">
-          <div class="alert alert-warning alert-with-icon" data-notify="container">
-            <span data-notify="icon" class="tim-icons icon-single-02"></span>
-            <h4 class="alert-heading">TOTAL CASES</h4>
-            <br>
-            <span data-notify="message" class="display-2"><%= 
-              data[0].confirmed %></span>
-          </div>
-        </div>  
-        <div class="col-xl-4 col-md-6 mb-4">
-          <div class="alert alert-danger alert-with-icon" data-notify="container">
-            <span data-notify="icon" class="tim-icons icon-simple-remove"></span>
-            <h4 class="alert-heading">TOTAL DEATHS</h4>
-            <br>
-            <span data-notify="message" class="display-2">
-              <%= data[0].deaths %></span>
-
-          </div>
-        </div>  
-
-      <div class="col-xl-4 col-md-6 mb-4">
-        <div class="alert alert-success alert-with-icon" data-notify="container">
-          <span data-notify="icon" class="tim-icons icon-minimal-down"></span>
-          <h4 class="alert-heading">TOTAL RECOVERED</h4>
-          <br>
-          <span data-notify="message" class="display-2"><%= data[0].recovered %></span>
-        </div>
-     </div>  
-    
-    </div>
-<!-----------/PART1---------------->        
 
   <%- include('footer'); %>

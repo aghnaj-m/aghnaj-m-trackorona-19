@@ -1,6 +1,5 @@
 $(document).ready(function () {
 
-alert("custom called");
   /*-------------------- WORLD MAP-----------------------*/
     var e={color:["#26B99A","#34495E","#BDC3C7","#3498DB","#9B59B6","#8abb6f","#759c6a","#bfd3b7"],
 title:{itemGap:8,textStyle:{fontWeight:"normal",color:"#408829"}}
@@ -307,11 +306,11 @@ error: function(error) {
 
 /************* /ITALY CHART  ************/
 
-/************* CHINA CHART  ************/
+/************* SPAIN CHART  ************/
 $.ajax({
   url: '/covid19/timeseries',
   mimeType: 'json',
-  data: {country: 'CHN'},
+  data: {country: 'ESP'},
   type: "POST",
 success: function(data) {
   var confirmedData = [];
@@ -361,7 +360,7 @@ error: function(error) {
   alert('Failed to load timeseries');
 }
 });
-/************* ITALY CHART  ************/
+/************* SPAIN CHART  ************/
 /************* USA CHART  ************/
 $.ajax({
   url: '/covid19/timeseries',
