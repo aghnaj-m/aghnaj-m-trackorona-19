@@ -4,6 +4,12 @@ const ejs = require('ejs');
 const bodyParser = require('body-parser');
 const app = express();
 const request = require('request');
+// Firebase App (the core Firebase SDK) is always required and
+// must be listed before other Firebase SDKs
+//var firebase = require("firebase/app");
+//require('firebase/database');
+
+
 //var async      = require('async');
 //var credentials = {connectionLimit: 10}
 
@@ -23,6 +29,37 @@ connection.connect(function(error){
     if(!!error) console.log(error);
     else console.log('Database Connected!');
 });*/
+
+/*var firebaseConfig = {
+    apiKey: "AIzaSyBzi7U782_DFMdsaxOUPwkwftXLPA5w7ZU",
+    authDomain: "trackorona-19.firebaseapp.com",
+    databaseURL: "https://trackorona-19.firebaseio.com",
+    projectId: "trackorona-19",
+    storageBucket: "trackorona-19.appspot.com",
+    messagingSenderId: "580530527055",
+    appId: "1:580530527055:web:a2a6fb8b50318cfb9f033a",
+    measurementId: "G-XLY5T31PN8"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+
+
+  var database = firebase.database();
+  var ref = database.ref('covidData/brief');
+
+  var usersRef = ref.child("users");
+  usersRef.set({
+    alanisawesome: {
+      date_of_birth: "June 23, 1912",
+      full_name: "Alan Turing"
+    },
+    gracehop: {
+      date_of_birth: "December 9, 1906",
+      full_name: "Grace Hopper"
+    }
+  });   */
+  
+
 app.use(express.static(path.join(__dirname, 'assets')));
 
 

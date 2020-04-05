@@ -6,7 +6,6 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js"
-
   },
   "author": "",
   "license": "ISC",
@@ -17,6 +16,8 @@
     "echarts": "^4.7.0",
     "ejs": "^3.0.1",
     "express": "^4.17.1",
+    "firebase": "^7.13.2",
+    "firebase-admin": "^8.10.0",
     "glyphicons": "^0.2.0",
     "mysql": "^2.18.1",
     "request": "^2.88.2"

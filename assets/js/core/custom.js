@@ -430,7 +430,10 @@ if($("#echart_bar_horizontal").length)
     var countries = [];  
     for(var i=1; i<data.length;i++){
       countries.push(data[i].country);
-      dailyCases.push(Number(data[i].new_cases.replace(',','')));
+      if(data[i].new_cases == "0" || data[i].new_cases == 0){
+        dailyCases.push("No news till now");
+      }else{
+      dailyCases.push(Number(data[i].new_cases.replace(',','')));}
     }
     echarts.init(document.getElementById("echart_bar_horizontal"),e).setOption(
       {
@@ -444,7 +447,7 @@ if($("#echart_bar_horizontal").length)
           data: countries.reverse()
         }],
       series:[
-        {name:"new case",type:"bar",data: dailyCases.reverse() }]  });
+        {name:"new cases",type:"bar",data: dailyCases.reverse() }]  });
     
 
   },

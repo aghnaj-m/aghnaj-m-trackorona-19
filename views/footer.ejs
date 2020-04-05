@@ -47,6 +47,13 @@
 
         fixed_plugin_open = $('.sidebar .sidebar-wrapper .nav li.active a p').html();
 
+        $sidebar.attr('data', 'blue');
+          
+          $main_panel.attr('data', 'blue');
+    
+          $full_page.attr('filter-color', 'blue');
+        
+          $sidebar_responsive.attr('data', 'blue');
 
 
         $('.fixed-plugin a').click(function(event) {
@@ -59,13 +66,6 @@
           }
         });
 
-            $sidebar.attr('data', 'blue');
-          
-            $main_panel.attr('data', 'blue');
-      
-            $full_page.attr('filter-color', 'blue');
-          
-            $sidebar_responsive.attr('data', 'blue');
           
 
         $('.switch-sidebar-mini input').on("switchChange.bootstrapSwitch", function() {
