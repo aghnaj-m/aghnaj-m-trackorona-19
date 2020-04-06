@@ -4,33 +4,21 @@ const ejs = require('ejs');
 const bodyParser = require('body-parser');
 const app = express();
 const request = require('request');
+require('es6-promise').polyfill();
+require('isomorphic-fetch');
+const fs = require('fs');
+
+ 
+
+
+/*************** FIREBASE **************/
+/*
 // Firebase App (the core Firebase SDK) is always required and
 // must be listed before other Firebase SDKs
-//var firebase = require("firebase/app");
-//require('firebase/database');
+var firebase = require("firebase/app");
+require('firebase/firestore');
 
-
-//var async      = require('async');
-//var credentials = {connectionLimit: 10}
-
-
-//connect to db
-//const mysql = require('mysql');
- 
-/*const connection=mysql.createConnection({
-    host:'localhost',
-    user:'root',
-    password:'root',
-    database:'expressdb',
-    port: '3306'
-});
- 
-connection.connect(function(error){
-    if(!!error) console.log(error);
-    else console.log('Database Connected!');
-});*/
-
-/*var firebaseConfig = {
+var firebaseConfig = {
     apiKey: "AIzaSyBzi7U782_DFMdsaxOUPwkwftXLPA5w7ZU",
     authDomain: "trackorona-19.firebaseapp.com",
     databaseURL: "https://trackorona-19.firebaseio.com",
@@ -44,21 +32,58 @@ connection.connect(function(error){
   firebase.initializeApp(firebaseConfig);
 
 
-  var database = firebase.database();
-  var ref = database.ref('covidData/brief');
+  var date = new Date();
+  var currentdate = date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear();
+  request.get('https://corona-virus-stats.herokuapp.com/api/v1/cases/countries-search?limit=200',function(err,response,body){
+    if (!err && response.statusCode == 200) {  
+      let obj = JSON.parse(body);
+      var confirmed = Array(),
+      deaths = Array(),
+      recovered = Array(),
+      countries = Array();
+      for(let i = 0;i<obj.data.rows.length;i++){
+          confirmed.push(obj.data.rows[i].total_cases);
+          deaths.push(obj.data.rows[i].total_deaths);
+          recovered.push(obj.data.rows[i].total_recovered);
+          countries.push(obj.data.rows[i].country);
+      }
+      
 
-  var usersRef = ref.child("users");
-  usersRef.set({
-    alanisawesome: {
-      date_of_birth: "June 23, 1912",
-      full_name: "Alan Turing"
-    },
-    gracehop: {
-      date_of_birth: "December 9, 1906",
-      full_name: "Grace Hopper"
+      for(let j  = 0;j<countries.length;j++)
+      {
+          var docRef = firebase.firestore().doc('backup:'+currentdate+'/'+countries[j]);
+          docRef.set({
+              confirmed: confirmed[j],
+              recovered: recovered[j],
+              deaths: deaths[j]
+          }).then(function(){
+              console.log("done "+countries[j]);
+          }).catch(function(){
+              console.log("error: "+countries[j]);
+          });
+      }
+  }else{
+    console.log("ERUUUUUUUUUUR");
+  }
+});
+*/
+request.get('https://corona-virus-stats.herokuapp.com/api/v1/cases/countries-search?limit=200',function(err,response,body){
+    if (!err && response.statusCode == 200) {
+    //console.log(JSON.parse(body).data.rows);
+    let backups = { 
+        backups: JSON.parse(body).data.rows
+    };
+
+    let data = JSON.stringify(backups);
+    fs.writeFileSync('functions/backups.json', data);
+
+    
     }
-  });   */
-  
+
+});
+
+
+  /*************** FIREBASE **************/
 
 app.use(express.static(path.join(__dirname, 'assets')));
 

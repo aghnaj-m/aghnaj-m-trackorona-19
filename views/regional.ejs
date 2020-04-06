@@ -7,7 +7,7 @@
           <div class="row">  
             <label for="cAr">Country & Region</label>
             <select name="cAr" id="cAr" class="selectpicker form-control"
-            data-style="btn-success" data-live-search="true" data-live-search="">
+            data-style="btn-success" data-live-search="true" >
             <% latest.forEach((e)=>{  %>
             <option class="text-black" value="<% if(e.countrycode){%><%= e.countrycode.iso3 %><%} %>"><%= e.countryregion %><% if(e.provincestate != ""){%> (<%= e.provincestate %>)<% } %></option>
             <% }); %>
