@@ -76,7 +76,6 @@ request.get('https://corona-virus-stats.herokuapp.com/api/v1/cases/countries-sea
 
     let data = JSON.stringify(backups);
     fs.writeFileSync('functions/backups.json', data);
-
     
     }
 
