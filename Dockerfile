@@ -16,4 +16,4 @@ RUN npm install
 COPY . .
 
 EXPOSE 8080
-CMD [ "pm2 start", "index.js" ]
+CMD [ "node", "index.js" ]
