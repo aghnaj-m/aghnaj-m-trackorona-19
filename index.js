@@ -13,8 +13,7 @@ const fs = require('fs');
 
 /*************** FIREBASE **************/
 /*
-// Firebase App (the core Firebase SDK) is always required and
-// must be listed before other Firebase SDKs
+//          *** A IGNORER ***
 var firebase = require("firebase/app");
 require('firebase/firestore');
 
@@ -29,9 +28,8 @@ var firebaseConfig = {
     measurementId: "G-XLY5T31PN8"
   };
   // Initialize Firebase
+
   firebase.initializeApp(firebaseConfig);
-
-
   var date = new Date();
   var currentdate = date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear();
   request.get('https://corona-virus-stats.herokuapp.com/api/v1/cases/countries-search?limit=200',function(err,response,body){
@@ -67,6 +65,13 @@ var firebaseConfig = {
   }
 });
 */
+//          *****   IMPORTANT !!!! *****
+// ON COMMENCE PAR ENVOYÉ UNE REQUETE EN EXTERNE POUR AVOIR DES DONNEES JSON.
+// APRES ON LES STOCKES CHEZ NOUS AU PROJET .
+// MAINTENANT C'EST LE TEMPS à UTILISER FIREBASE FUNCTIONS PLACER DANS LE DOSSIER ./FUNCTIONS/INDEX.JS
+// LA FONCTIONS A UN LIEN DECLANCHEUR QUI SERA POSER PAR LA SUITE SUR CRON-JOBS.COM QUI SE CHARGE DE LA LANCER
+// CHQUE JOUR A 00:00 
+
 request.get('https://corona-virus-stats.herokuapp.com/api/v1/cases/countries-search?limit=200',function(err,response,body){
     if (!err && response.statusCode == 200) {
     //console.log(JSON.parse(body).data.rows);
