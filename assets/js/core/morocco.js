@@ -49,6 +49,39 @@ $.ajax({
         alert("failed to load piechart")
     }
     });
+    /*****************  HOSPITAUX   *********/
+    //manageMemberTable
+
+    $.ajax({
+        url: 'https://services3.arcgis.com/hjUMsSJ87zgoicvl/arcgis/rest/services/Hopitaux/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json&_=1586869984055',
+        mimeType: 'json',
+        data: {},
+        type: "GET",
+        success: function(data) {
+            alert(JSON.stringify(data.features[0]));
+            if(data.features.length>0){
+                var body = "<tr>";
+                data.features.forEach((e) => {
+                body    += "<td>" + e.attributes.Nom + "</td>";
+                body    += "<td>" + e.attributes.province + "</td>";
+                body    += "<td>" + e.attributes.Région + "</td>";
+                body    += "</tr>";
+            });
+                $( "#manageMemberTable tbody").html("");
+                $( "#manageMemberTable tbody").html(body);
+                $( "#manageMemberTable" ).DataTable({scrollX: true});
+            }else{
+                $( "#manageMemberTable tbody" ).html('<td colspan=6><div class="alert alert-success">Liste vide</div></td>');
+              }
+    
+            
+    
+        },
+        error: function(error){
+
+        }
+    });
+
 
               
     });

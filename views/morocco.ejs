@@ -33,15 +33,16 @@
     
     </div>
 <!-----------/PART1---------------->        
-
+<div class="col-12 row card">
+  <center><h3 class="card-title"><i class="tim-icons icon-simple-add text-info"></i> 
+    Confirmed cases by moroccan regions:</h3>
+    <p class="category"> last update: <%= data[0].last_updated %></p>
+  </center>
+</div>
 <div class="col-md-12">
     <div class="card  card-plain">
-      <div class="card-header">
-        <h3 class="card-title">confirmed cases by moroccan regions:</h3>
-        <p class="category"> last update: <%= data[0].last_updated %></p>
-      </div>
       <div class="col-lg-12">
-        <img src="/img/flag.png" alt="" height="60">
+        <!--<img src="/img/flag.png" alt="" height="60">-->
         </div>      
       <div class="card-body">
         <div class="table-responsive">
@@ -76,11 +77,12 @@
     </div>
   </div>
   <!------------- PIE CHART 1  ---------------->
+  <div class="col-12 row card">
+    <center><h3 class="card-title"><i class="tim-icons icon-send text-info"></i> Cases Chart</h3></center>
+  </div>
+
 <div class="col-lg-12">
-  <div class="card card-chart">
-    <div class="card-header">
-      <h3 class="card-title"><i class="tim-icons icon-send text-info"></i> confirmed Cases</h3>
-    </div>
+  <div class="card card-plain">
     <div class="card-body">
         <div class="x_content">
           <div id="echart_pie" style="height: 380px; width: 600; transparent; user-select: none; position: relative; background-color: transparent;" _echarts_instance_="ec_1585694999086">
@@ -93,6 +95,27 @@
   </div>
 </div>
 <!------------- /PIE CHART 1  ---------------->
+<!-------------- HOSTPITAUX -------------------->
+<div class="col-12 row card">
+  <center><h3 class="card-title"><i class="tim-icons icon-sound-wave text-success"></i> Available Hospitals By Regions</h3></center>
+</div>
 
+<div class="col-12 row">
+  <div class="card card-plain">
+    <div class="card-body">
+      <table class="table table-striped " id="manageMemberTable">
+        <thead>
+          <tr>
+            <th>NAME</th>
+             <th>PROVINCE</th>
+             <th>REGION</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    </div>
+</div>
   <%- include('footer'); %>
   <script src="/js/core/morocco.js"></script>
+  

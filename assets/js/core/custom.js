@@ -47,7 +47,7 @@ if($("#echart_world_map")){
                   max_cases = e.confirmed;
               ;
           }else{
-            if(e.confirmed >= 5000 || e.deaths > 500){
+            if(e.confirmed >= 10000 || e.deaths > 1500){
               pieCases.push({name: e.countryregion,value : e.confirmed});
               pieDeaths.push({name: e.countryregion,value : e.deaths});
             }
@@ -81,7 +81,7 @@ if($("#echart_world_map")){
             
             $("#0").click(function() {
                 var option = options;
-                option.title.textStyle.color = "#2A81A6";
+                option.title.textStyle.color = "#FFFFFF";
                 option.title.text = "C O N F I R M E D  C A S E S  C O U N T"
                 option.dataRange.color = ["#000080","#0000CD","#1E90FF"];
                 option.dataRange.max = max_cases;

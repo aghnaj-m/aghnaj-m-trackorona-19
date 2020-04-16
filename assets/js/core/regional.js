@@ -1,260 +1,261 @@
-$(document).ready(function () {
+$(document).ready(function (evt) {
 
-    if($("#chartBig1")){
-      let date_ob = new Date();
-      let date = ("0" + date_ob.getDate()).slice(-2);
-      let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
-      let year = date_ob.getFullYear();
-      let fullDate = year + "-" + month + "-" + date;
-  
-        var selectValue = $("#cAr").val();
-        $.ajax({
-            url: 'https://covidapi.info/api/v1/country/'+selectValue+'/timeseries/2020-02-01/'+fullDate,
-            mimeType: 'json',
-            data: {},
-            type: "GET",
-        success: function(data) {
-            remplir(data);
-        },
-        error: function(error) {
-            alert('Failed to load data');
-        }
+        $('.selectpicker').val("Morocco");
+        remplir();
+	    $(".selectpicker").on('shown.bs.select', function(e) {
+        previous_value = $(this).val();
+        }).change(remplir);
+        
+
+        function remplir() {
+            var labels=Array();
+            var labels1=Array();
+            var labels2=Array();
+            var labelsTemp=Array();
+            var casesTemp=Array();
+            var deathTemp=Array();
+            var recoveredTemp=Array();
+            var selectedcountries = $('.selectpicker').val();
+            if(selectedcountries.length <= 5){
+            if(selectedcountries.length==0){
+                //chartInit();
+                alert('chart vide');
+            }else{
+                        /*********** CHART DEATHES */
+                fetch('https://raw.githubusercontent.com/royriojas/corona/master/src/data/deaths.json')
+                .then(function(response){
+                    return response.json();
+            }).then(function(obj){
+                deathTemp=[];
+                labelsTemp=[];
+                var deaths= Array();
+                for(var i=0;i<selectedcountries.length;i++){
+                    for(var j=0;j<obj.length;j++){
+                        if(selectedcountries[i] === obj[j].id){
+                            start = false;
+                            for(var k=0;k<obj[j].data.length;k++){
+                                if(obj[j].data[k].x == 'day-39')
+                                    start = true;
+                                if(start){
+                                deathTemp.push(obj[j].data[k].y);
+                                labelsTemp.push(obj[j].data[k].date)
+                                }
+                            }
+                            break;
+                        }else{
+                            //alert(obj[j].id+' # '+selectedcountries[i]);
+                        }
+                    }
+                    deaths.push(deathTemp);
+                    labels.push(labelsTemp);
+                    labelsTemp = [];
+                    deathTemp=[];
+                }
+                ////chart deaths
+    
+            $('#chartBig2').remove(); // this is my <canvas> element
+            $('.chart-area2').append('<canvas id="chartBig2"><canvas>');    
+    
+             var ctx2 = document.getElementById('chartBig2').getContext('2d');
+             ctx2.canvas.width = "854";// resize to parent width
+             ctx2.canvas.height = "300"; // resize to parent height 
+             var chartBig2 = new Chart(ctx2, {
+                 type: 'line',
+                 data: {
+                     labels: labels[0],
+                 },
+                 options:{
+                     legend:{
+                         display: true,
+                     }
+                 }
+             });
+            var RedColors = ["#FF0000","#8B0000","#FFA07A","#E9967A","#DC143C"];
+    
+             for(let i=0;i<deaths.length;i++){
+                 chartBig2.data.datasets.push({
+                     fill: true,                        
+                     data: deaths[i],  
+                     label: selectedcountries[i],
+                     //backgroundColor: gradientStroke2,
+                     borderColor: RedColors[i],
+                     borderWidth: 2,
+                     borderDash: [],
+                     borderDashOffset: 0.0,
+                     pointBackgroundColor: RedColors[i],
+                     pointBorderColor: 'rgba(255,255,255,0)',
+                     pointHoverBackgroundColor: RedColors[i],
+                     pointBorderWidth: 20,
+                     pointHoverRadius: 4,
+                     pointHoverBorderWidth: 15,
+                     pointRadius: 4,
+               
+                 });
+             }
+             chartBig2.update();
+            });
+            /*********** /CHART DEATHES */
+            /*********** CHART CASES */
+            fetch('https://raw.githubusercontent.com/royriojas/corona/master/src/data/cases.json')
+            .then(function(response){
+                return response.json();
+        }).then(function(obj){
+            labelsTemp1=[];
+            casesTemp=[];
+            var cases= Array();
+            for(var i=0;i<selectedcountries.length;i++){
+                for(var j=0;j<obj.length;j++){
+                    if(selectedcountries[i] === obj[j].id){
+                        start = false;
+                        for(var k=0;k<obj[j].data.length;k++){
+                            if(obj[j].data[k].x == 'day-39')
+                                start = true;
+                            if(start){
+                            casesTemp.push(obj[j].data[k].y);
+                            labelsTemp1.push(obj[j].data[k].date)
+                            }
+                        }
+                        break;
+                    }else{
+                        //alert(obj[j].id+' # '+selectedcountries[i]);
+                    }
+                }
+                cases.push(casesTemp);
+                casesTemp=[];
+                labels1.push(labelsTemp1);
+                labelsTemp1 = [];
+    
+            }
+            ////chart Cases
+    
+        $('#chartBig1').remove(); // this is my <canvas> element
+        $('.chart-area1').append('<canvas id="chartBig1"><canvas>');    
+    
+         var ctx1 = document.getElementById('chartBig1').getContext('2d');
+         ctx1.canvas.width = "854";// resize to parent width
+         ctx1.canvas.height = "300"; // resize to parent height 
+         var chartBig1 = new Chart(ctx1, {
+             type: 'line',
+             data: {
+                 labels: labels1[0],
+             },
+             options:{
+                 legend:{
+                     display: true,
+                 }
+             }
+         });
+        var BlueColors = ["#ADD8E6","#00BFFF","#4682B4","#0000FF","#000080"];
+    
+         for(let i=0;i<cases.length;i++){
+    
+             chartBig1.data.datasets.push({
+                 fill: true,                        
+                 data: cases[i],  
+                 label: selectedcountries[i],
+                 //backgroundColor: gradientStroke2,
+                 borderColor: BlueColors[i],
+                 borderWidth: 2,
+                 borderDash: [],
+                 borderDashOffset: 0.0,
+                 pointBackgroundColor: BlueColors[i],
+                 pointBorderColor: 'rgba(255,255,255,0)',
+                 pointHoverBackgroundColor: BlueColors[i],
+                 pointBorderWidth: 20,
+                 pointHoverRadius: 4,
+                 pointHoverBorderWidth: 15,
+                 pointRadius: 4,
+           
+             });
+         }
+         chartBig1.update();
         });
+            /*********** /CHART CASES */
+    
+    
+            /*********** CHART RECOVERED */
+            fetch('https://raw.githubusercontent.com/royriojas/corona/master/src/data/recovered.json')
+            .then(function(response){
+                return response.json();
+        }).then(function(obj){
+            labelsTemp2=[];
+            casesTemp=[];
+            var recovered= Array();
+            for(var i=0;i<selectedcountries.length;i++){
+                for(var j=0;j<obj.length;j++){
+                    if(selectedcountries[i] === obj[j].id){
+                        start = false;
+                        for(var k=0;k<obj[j].data.length;k++){
+                            if(obj[j].data[k].x == 'day-39')
+                                start = true;
+                            if(start){
+                            recoveredTemp.push(obj[j].data[k].y);
+                            labelsTemp2.push(obj[j].data[k].date)
+                            }
+                        }
+                        break;
+                    }else{
+                        //alert(obj[j].id+' # '+selectedcountries[i]);
+                    }
+                }
+                recovered.push(recoveredTemp);
+                recoveredTemp=[];
+                labels2.push(labelsTemp2);
+                labelsTemp2 = [];
+    
+            }
+            ////chart Cases
+    
+        $('#chartBig3').remove(); // this is my <canvas> element
+        $('.chart-area3').append('<canvas id="chartBig3"><canvas>');    
+    
+         var ctx3 = document.getElementById('chartBig3').getContext('2d');
+         ctx3.canvas.width = "854";// resize to parent width
+         ctx3.canvas.height = "300"; // resize to parent height 
+         var chartBig3 = new Chart(ctx3, {
+             type: 'line',
+             data: {
+                 labels: labels2[0],
+             },
+             options:{
+                 legend:{
+                     display: true,
+                 }
+             }
+         });
+        var GreenColor = ["#00FFFF","#7FFFD4","#66CDAA","#008080","#5F9EA0"];
+    
+         for(let i=0;i<recovered.length;i++){
+    
+             chartBig3.data.datasets.push({
+                 fill: true,                        
+                 data: recovered[i],  
+                 label: selectedcountries[i],
+                 //backgroundColor: gradientStroke2,
+                 borderColor: GreenColor[i],
+                 borderWidth: 2,
+                 borderDash: [],
+                 borderDashOffset: 0.0,
+                 pointBackgroundColor: GreenColor[i],
+                 pointBorderColor: 'rgba(255,255,255,0)',
+                 pointHoverBackgroundColor: GreenColor[i],
+                 pointBorderWidth: 20,
+                 pointHoverRadius: 4,
+                 pointHoverBorderWidth: 15,
+                 pointRadius: 4,
+           
+             });
+         }
+         chartBig3.update();
+        });
+            /*********** /CHART RECOVERED */
+    
+          }
+    
+        }else{
+            alert('Ops! You Can Only Compare Between 5 Countries')
+        }
     
     }
-
-    $('#cAr').on('change',function(evt){
-        var selectValue = this.value;
-        let date_ob = new Date();
-        let date = ("0" + date_ob.getDate()).slice(-2);
-        let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
-        let year = date_ob.getFullYear();
-        let fullDate = year + "-" + month + "-" + date;
-        $("#1").removeClass("active");
-        $("#2").removeClass("active");
-        $("#0").addClass("active");
-        if($("#chartBig1")){
-            $.ajax({
-              url: 'https://covidapi.info/api/v1/country/'+selectValue+'/timeseries/2020-02-01/'+fullDate,
-              mimeType: 'json',
-                data: {country: selectValue},
-                type: "GET",
-            success: function(data) {
-                remplir(data);
-            },
-            error: function(error) {
-                alert('Failed to load data');
-            }
-            });
-        
-        }
-    });
-
-    gradientChartOptionsConfigurationWithTooltipGreen = {
-        maintainAspectRatio: false,
-        legend: {
-          display: false
-        },
-      
-        tooltips: {
-          backgroundColor: '#f5f5f5',
-          titleFontColor: '#333',
-          bodyFontColor: '#666',
-          bodySpacing: 4,
-          xPadding: 12,
-          mode: "nearest",
-          intersect: 0,
-          position: "nearest"
-        },
-        responsive: true,
-        scales: {
-          yAxes: [{
-            barPercentage: 1.6,
-            gridLines: {
-              drawBorder: false,
-              color: 'rgba(29,140,248,0.0)',
-              zeroLineColor: "transparent",
-            },
-            ticks: {
-              suggestedMin: 50,
-              suggestedMax: 125,
-              padding: 20,
-              fontColor: "#9e9e9e"
-            }
-          }],
-      
-          xAxes: [{
-            barPercentage: 1.6,
-            gridLines: {
-              drawBorder: false,
-              color: 'rgba(0,242,195,0.1)',
-              zeroLineColor: "transparent",
-            },
-            ticks: {
-              padding: 20,
-              fontColor: "#9e9e9e"
-            }
-          }]
-        }
-      };      
-
-      gradientChartOptionsConfigurationWithTooltipRed = {
-        maintainAspectRatio: false,
-        legend: {
-          display: false
-        },
-      
-        tooltips: {
-          backgroundColor: '#f5f5f5',
-          titleFontColor: '#333',
-          bodyFontColor: '#666',
-          bodySpacing: 4,
-          xPadding: 12,
-          mode: "nearest",
-          intersect: 0,
-          position: "nearest"
-        },
-        responsive: true,
-        scales: {
-          yAxes: [{
-            barPercentage: 1.6,
-            gridLines: {
-              drawBorder: false,
-              color: 'rgba(29,140,248,0.0)',
-              zeroLineColor: "transparent",
-            },
-            ticks: {
-              suggestedMin: 50,
-              suggestedMax: 125,
-              padding: 20,
-              fontColor: "#9e9e9e"
-            }
-          }],
-      
-          xAxes: [{
-            barPercentage: 1.6,
-            gridLines: {
-              drawBorder: false,
-              color: 'rgba(250,128,114,0.1)',
-              zeroLineColor: "transparent",
-            },
-            ticks: {
-              padding: 20,
-              fontColor: "#9e9e9e"
-            }
-          }]
-        }
-      };
-      
-    
-    
-
-    function remplir(data){
-
-     var confirmedData = [],
-        deathsData = [],
-        recoveredData = [];
-        labels = [];
-     data.result.forEach((e)=>{
-        if(e.confirmed >= 1){
-        confirmedData.push(e.confirmed);
-        deathsData.push(e.deaths);
-        recoveredData.push(e.recovered);
-        labels.push(e.date);
-        }
-    });
-
-    $('#chartBig1').remove(); // this is my <canvas> element
-    $('.chart-area').append('<canvas id="chartBig1"><canvas>');
-    var canvas = document.querySelector('#chartBig1');
-    var ctx = document.getElementById("chartBig1").getContext('2d');
-    ctx.canvas.width = "854";// resize to parent width
-    ctx.canvas.height = "350"; // resize to parent height
-
-
-
-    var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
-
-    gradientStroke.addColorStop(1, 'rgba(72,72,176,0.1)');
-    gradientStroke.addColorStop(0.4, 'rgba(72,72,176,0.0)');
-    gradientStroke.addColorStop(0, 'rgba(119,52,169,0)'); //purple colors
-    var config = {
-      type: 'line',
-      data: {                       
-        labels: labels, 
-        datasets: [{
-          label: "Confirmed Cases",
-          fill: true,
-          backgroundColor: gradientStroke,
-          borderColor: '#00A5D7',
-          borderWidth: 2,
-          borderDash: [],
-          borderDashOffset: 0.0,
-          pointBackgroundColor: '#00A5D7',
-          pointBorderColor: 'rgba(255,255,255,0)',
-          pointHoverBackgroundColor: '#00A5D7',
-          pointBorderWidth: 20,
-          pointHoverRadius: 4,
-          pointHoverBorderWidth: 15,
-          pointRadius: 4,
-          data: confirmedData,
-        }]
-      },
-      options: gradientChartOptionsConfigurationWithTooltipRed
-    };
-
-    var myChartData = new Chart(ctx,config);
-
-    $("#0").unbind('click').bind('click',function() {
-        myChartData.config.data.datasets[0].data = [];
-        myChartData.config.data.datasets[0].data = confirmedData;
-        myChartData.config.data.datasets[0].label = "confirmed cases";
-        myChartData.config.data.labels = labels;
-        myChartData.config.options  =  gradientChartOptionsConfigurationWithTooltipRed;
-        gradientStroke.addColorStop(1, 'rgba(45,167,212,0.15)');
-        gradientStroke.addColorStop(0.4, 'rgba(45,167,212,0.0)'); //blue colors
-        gradientStroke.addColorStop(0, 'rgba(45,167,212,0)'); //blue colors
-        myChartData.config.data.datasets[0].backgroundColor = gradientStroke;
-        myChartData.config.data.datasets[0].borderColor = "#00A5D7";
-        myChartData.config.data.datasets[0].pointBackgroundColor="#00A5D7";
-        myChartData.config.data.datasets[0].pointHoverBackgroundColor="#00A5D7";
-  
-        myChartData.update();
-      });
-      $("#1").unbind('click').bind('click',function() {
-        myChartData.config.data.datasets[0].data = [];
-        myChartData.config.data.datasets[0].data = deathsData;
-        myChartData.config.data.datasets[0].label = "deaths cases";
-        myChartData.config.data.labels = labels;
-        myChartData.config.options  =  gradientChartOptionsConfigurationWithTooltipRed;
-        gradientStroke.addColorStop(1, 'rgba(229,43,93,0.15)');
-        gradientStroke.addColorStop(0.4, 'rgba(229,43,93,0.0)'); //red colors
-        gradientStroke.addColorStop(0, 'rgba(229,43,93,0)'); //red colors
-        myChartData.config.data.datasets[0].backgroundColor = gradientStroke;
-        myChartData.config.data.datasets[0].borderColor = "#D1072F";
-        myChartData.config.data.datasets[0].pointBackgroundColor="#D1072F";
-        myChartData.config.data.datasets[0].pointHoverBackgroundColor="#D1072F";
-  
-        myChartData.update();
-    });
-
-    $("#2").unbind('click').bind('click',function() {
-        myChartData.config.data.datasets[0].data = [];
-        myChartData.config.data.datasets[0].data = recoveredData;
-        myChartData.config.data.datasets[0].label = "recovered cases";
-        myChartData.config.data.labels = labels;
-        myChartData.config.options  =  gradientChartOptionsConfigurationWithTooltipGreen;
-        gradientStroke.addColorStop(1, 'rgba(66,134,121,0.15)');
-        gradientStroke.addColorStop(0.4, 'rgba(66,134,121,0.0)'); //green colors
-        gradientStroke.addColorStop(0, 'rgba(66,134,121,0)'); //green colors
-        myChartData.config.data.datasets[0].backgroundColor = gradientStroke;
-        myChartData.config.data.datasets[0].borderColor = "#00d6b4";
-        myChartData.config.data.datasets[0].pointBackgroundColor="#00d6b4";
-        myChartData.config.data.datasets[0].pointHoverBackgroundColor="#00d6b4";
-  
-        myChartData.update();
-    });
-
-    }     
 
 });

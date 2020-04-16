@@ -74,13 +74,25 @@ var firebaseConfig = {
 
 request.get('https://corona-virus-stats.herokuapp.com/api/v1/cases/countries-search?limit=200',function(err,response,body){
     if (!err && response.statusCode == 200) {
-    //console.log(JSON.parse(body).data.rows);
-    let backups = { 
-        backups: JSON.parse(body).data.rows
-    };
+        //console.log(JSON.parse(body).data.rows);
+        let date_ob = new Date();
+        let date = ("0" + date_ob.getDate()).slice(-2);
+        let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
+        let year = date_ob.getFullYear();
+        let fullDate = year + "-" + month + "-" + date;
 
-    let data = JSON.stringify(backups);
-    fs.writeFileSync('functions/backups.json', data);
+        let backups = {};
+        let table = JSON.parse(body).data.rows;
+        backups[fullDate] =  [];
+        for(let i = 0;i<table.length;i++)
+        {
+            countryName = table[i].country;
+            country = {};
+            country[countryName] = table[i];
+            backups[fullDate].push(country);
+        }
+        let data = JSON.stringify(backups);
+        fs.writeFileSync('functions/backups.json', data);
     
     }
 
