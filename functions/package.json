@@ -28,7 +28,7 @@
     "glyphicons": "^0.2.0",
     "isomorphic-fetch": "^2.2.1",
     "mysql": "^2.18.1",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.1",
     "request": "^2.88.2"
   },
   "devDependencies": {
