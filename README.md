@@ -4,7 +4,7 @@ The goal was creating a dashboard in order to meet the information needs of citi
 
 ⚠️ &nbsp;&nbsp; This dashboard is no longer maintained. The values of the indicators displayed on this tool may be erroneous, since certain API's have stopped updating data or deleted.
 
-<h3>Outils utilisés</h3>
+<h3>Used Tools</h3>
 
 <ul>
   <li>Node.js</li>
